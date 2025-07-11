@@ -1,0 +1,58 @@
+:Use Google Visualization Charts to analyze social media data.
+
+<div id="myChart" style="max-width:700px; height:400px"></div> 
+<script src="https://www.gstatic.com/charts/loader.js"></script> 
+<script> 
+google.charts.load('current',{packages:['corechart']}); 
+google.charts.setOnLoadCallback(drawChart); 
+// Your Function 
+function drawChart() { 
+... 
+} 
+</script> 
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>Social Media Data Visualization</title>
+<!-- Load Google Charts --> 
+<script type="text/javascript" 
+src="https://www.gstatic.com/charts/loader.js"></script> 
+<script type="text/javascript"> 
+// Load the Visualization API and the corechart package. 
+google.charts.load('current', {'packages':['corechart']}); 
+// Set a callback to run when the Google Visualization API is loaded. 
+google.charts.setOnLoadCallback(drawChart); 
+function drawChart() { 
+// Create the data table. 
+var data = new google.visualization.DataTable(); 
+data.addColumn('string', 'Social Media Platform'); 
+data.addColumn('number', 'Number of Followers'); 
+data.addRows([ 
+['Facebook', 5000], 
+['Twitter', 7000], 
+['Instagram', 10000], 
+['LinkedIn', 4000] 
+]); 
+// Set chart options 
+var options = { 
+title: 'Number of Followers on Social Media Platforms', 
+chartArea: {width: '50%'}, 
+hAxis: { 
+title: 'Number of Followers', 
+minValue: 0 
+}, 
+vAxis: { 
+title: 'Social Media Platform' 
+} 
+}; 
+// Instantiate and draw the chart. 
+var chart = new 
+google.visualization.BarChart(document.getElementById('chart_div')); 
+chart.draw(data, options); 
+} 
+</script>
+</head> 
+<body> 
+<!--Div that will hold the chart--> 
+<div id="chart_div" style="width: 900px; height: 500px;"></div></body> 
+</html> 
