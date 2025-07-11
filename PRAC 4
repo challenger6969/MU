@@ -1,0 +1,58 @@
+Develop Content (text, emoticons, image, audio, video) based social media analytics model for business. (e.g., Content Based Analysis: Topic, Issue,Trend, sentiment/opinion 
+analysis, audio, video, image analytics) 
+
+!pip install vaderSentiment 
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer 
+import pandas as pd 
+data = { 
+    'Text': [ 
+        "I love programming. It is amazing!", 
+        "I hate bugs, they are so frustrating!", 
+        "The weather is nice today.", 
+        "I am so tired, feeling exhausted.", 
+        "I am looking forward to the weekend.", 
+        "This is a bad movie, I don't like it.", 
+        "I am feeling great, everything is going well.", 
+        "It's just an average day, nothing special." 
+    ] 
+} 
+ 
+df = pd.DataFrame(data) 
+analyzer = SentimentIntensityAnalyzer() 
+def analyze_sentiment(text): 
+    sentiment_score = analyzer.polarity_scores(text) 
+    compound_score = sentiment_score['compound'] 
+    if compound_score >= 0.05: 
+        return 'Positive' 
+    elif compound_score <= -0.05: 
+        return 'Negative' 
+    else: 
+        return 'Neutral' 
+df['Sentiment'] = df['Text'].apply(analyze_sentiment) 
+print(df) 
+data = { 
+    'Text': [ 
+        "I love programming. It is amazing!", 
+        "I hate bugs, they are so frustrating!", 
+        "The weather is nice today.", 
+        "I am so tired, feeling exhausted.", 
+        "I am looking forward to the weekend.",
+ "This is a bad movie, I don't like it.", 
+        "I am feeling great, everything is going well.", 
+        "It's just an average day, nothing special." 
+    ] 
+} 
+df = pd.DataFrame(data) 
+analyzer = SentimentIntensityAnalyzer() 
+def analyze_sentiment(text): 
+    sentiment_score = analyzer.polarity_scores(text) 
+    compound_score = sentiment_score['compound'] 
+    if compound_score >= 0.05: 
+        return 'Positive' 
+    elif compound_score <= -0.05: 
+        return 'Negative' 
+    else: 
+        return 'Neutral' 
+df['Sentiment'] = df['Text'].apply(analyze_sentiment) 
+print(df)
+
