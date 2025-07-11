@@ -1,0 +1,86 @@
+Develop Structure based social media analytics model for any business. 
+(e.g. Structure Based Models -community detection influence analysis) 
+
+import pandas as pd 
+import networkx as nx 
+import matplotlib.pyplot as plt 
+from networkx.algorithms import community 
+import community as community_louvain 
+# Load the dataset 
+df = pd.read_csv('C:\\Users\\OneDrive\\Desktop\\Msc Data Science Sem-2\\Social 
+Media Analytics\\facebook.csv') 
+# Display the first few rows of the dataframe 
+print(df.head())
+# Create the graph from the edge list 
+fb_graph = nx.from_pandas_edgelist(df, source="id", target="friend_id") 
+# Display all the nodes 
+print(fb_graph.nodes())
+# Display all the edges 
+print(fb_graph.edges())
+# Add a new edge to the graph 
+fb_graph.add_edge(123, 2154) 
+# Display all the nodes again 
+print(fb_graph.nodes())
+# Community detection using Girvan-Newman algorithm 
+comp = community.girvan_newman(fb_graph) 
+first_level_communities = next(comp) 
+second_level_communities = next(comp) 
+first_community_list = sorted(map(sorted, first_level_communities)) 
+second_community_list = sorted(map(sorted, second_level_communities)) 
+print(f"First level communities: {first_community_list}") 
+print(f"Second level communities: {second_community_list}")
+# Community detection using Louvain method 
+partition = community_louvain.best_partition(fb_graph) 
+# Plot the communities detected by the Louvain method 
+pos = nx.spring_layout(fb_graph) 
+cmap = plt.get_cmap('viridis') 
+colors = [partition[node] for node in fb_graph.nodes()] 
+plt.figure(figsize=(12, 12)) 
+nx.draw(fb_graph, pos, node_color=colors, with_labels=True, cmap=cmap, 
+node_size=50, font_size=8) 
+plt.show()
+# Calculate degree centrality 
+degree_centrality = nx.degree_centrality(fb_graph) 
+# Sort and display the degree centrality values 
+sorted_degree_centrality = sorted(degree_centrality.items(), key=lambda x: 
+x[1], reverse=True) 
+print("Degree Centrality:", sorted_degree_centrality)
+# Calculate betweenness centrality 
+betCent = nx.betweenness_centrality(fb_graph, normalized=True, 
+endpoints=True) sorted_betCent = sorted(betCent.items(), key=lambda x: x[1], 
+reverse=True) print("Betweenness Centrality:", sorted_betCent)
+# Plot the graph with betweenness centrality 
+node_color = [20000.0 * fb_graph.degree(v) for v in fb_graph] 
+node_size = [v * 10000 for v in betCent.values()] 
+plt.figure(figsize=(20, 20)) 
+nx.draw_networkx(fb_graph, pos=pos, with_labels=False, 
+node_color=node_color, node_size=node_size) 
+plt.axis("off") 
+plt.show()
+# Calculate and print closeness centrality 
+closeness_centrality = nx.closeness_centrality(fb_graph) 
+sorted_closeness_centrality = sorted(closeness_centrality.items(), key=lambda item: 
+item[1], reverse=True) 
+print("Closeness Centrality:", sorted_closeness_centrality[:8])
+# Plot the graph with closeness centrality 
+node_size = [v * 50 for v in closeness_centrality.values()] 
+plt.figure(figsize=(15, 8)) 
+nx.draw_networkx(fb_graph, pos=pos, node_size=node_size, with_labels=False, 
+width=0.15) plt.axis("off")
+plt.show()
+# Check for bridges in the graph 
+print(nx.has_bridges(fb_graph))
+# Find and print all the bridges 
+bridges = list(nx.bridges(fb_graph)) 
+print("Number of bridges:", len(bridges)) 
+# Find and print all the local bridges 
+local_bridges = list(nx.local_bridges(fb_graph, with_span=False)) 
+print("Number of local bridges:", len(local_bridges))
+plt.figure(figsize=(15, 5)) 
+nx.draw_networkx(fb_graph, pos=pos, node_size=10, with_labels=False, width=0.15) 
+nx.draw_networkx_edges(fb_graph, pos, edgelist=local_bridges, 
+width=0.5, edge_color="green") 
+plt.axis("off") 
+plt.show() 
+# Calculate and print the average clustering coefficient 
+print("Average clustering coefficient:", nx.average_clustering(fb_graph))
